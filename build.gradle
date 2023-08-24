@@ -1,5 +1,6 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.github.spotbugs.snom.SpotBugsTask
+import ru.vyarus.gradle.plugin.python.task.PythonTask
 
 // The buildscript block defines dependencies in order for .gradle file evaluation.
 // This is separate from application dependencies.
@@ -38,6 +39,7 @@ plugins {
     id 'distribution'
     id 'version-catalog'
     id 'maven-publish'
+    id 'ru.vyarus.use-python'
 }
 
 apply from: "$rootDir/publish-repositories.gradle"
@@ -560,10 +562,50 @@ task('generate') {
     dependsOn subprojects.collect { it.getTasksByName('generateJsonSchema2Pojo', true) }
 }
 
+python {
+    envPath = '.venv'
+    minPythonVersion = '3.9'
+    scope = 'VIRTUALENV'
+    installVirtualenv = true
+    pip 'pip:21.3.1'
+    // https://github.com/csachs/pyproject-flake8/issues/13
+    pip 'flake8:4.0.1'
+    // flake8 doesn't support pyproject.toml files
+    // and thus there is the wrapper "pyproject-flake8" for this
+    pip 'pyproject-flake8:0.0.1a2'
+    pip 'black:22.3.0'
+    pip 'mypy:1.4.1'
+    pip 'isort:5.6.4'
+    pip 'coverage[toml]:6.3.1'
+}
+
+task isortGlobalFormat(type: PythonTask) {
+    module = "isort"
+    command = "--settings-file=${project.rootProject.file('pyproject.toml').absolutePath} ./"
+    subprojects.each {
+        def licenseTask = it.tasks.findByName('licenseFormatPython')
+        if (licenseTask != null) {
+            dependsOn(licenseTask)
+        }
+        def generateManifestFilesTask = project.tasks.findByName('generateComponentManifestClassFiles')
+        if (generateManifestFilesTask != null) {
+            licenseTask.dependsOn generateManifestFilesTask
+        }
+    }
+}
+
+task blackGlobalFormat(type: PythonTask) {
+    module = "black"
+    // the line length should match .isort.cfg
+    command = "--config ${project.rootProject.file('pyproject.toml').absolutePath} ./"
+    dependsOn isortGlobalFormat
+}
+
 task('format') {
     dependsOn generate
     dependsOn spotlessApply
-    dependsOn subprojects.collect { it.getTasksByName('airbytePythonFormat', true) }
+    dependsOn isortGlobalFormat
+    dependsOn blackGlobalFormat
 }
 
 // add licenses for python projects.
