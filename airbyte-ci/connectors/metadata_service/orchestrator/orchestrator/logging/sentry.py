@@ -1,8 +1,8 @@
-import os
-import sentry_sdk
 import functools
+import os
 
-from dagster import OpExecutionContext, SensorEvaluationContext, AssetExecutionContext, get_dagster_logger
+import sentry_sdk
+from dagster import AssetExecutionContext, OpExecutionContext, SensorEvaluationContext, get_dagster_logger
 
 sentry_logger = get_dagster_logger("sentry")
 

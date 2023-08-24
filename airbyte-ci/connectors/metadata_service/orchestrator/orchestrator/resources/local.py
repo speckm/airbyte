@@ -1,6 +1,8 @@
-from dagster import StringSource, InitResourceContext, resource, Field
-from .file_managers.local_file_manager import SimpleLocalFileManager
 import os
+
+from dagster import Field, InitResourceContext, StringSource, resource
+
+from .file_managers.local_file_manager import SimpleLocalFileManager
 
 
 @resource(

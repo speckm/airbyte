@@ -1,4 +1,5 @@
-from typing import Optional, List
+from typing import List, Optional
+
 from pydantic import BaseModel, Extra
 
 # TODO (ben): When the pipeline project is brought into the airbyte-ci folder

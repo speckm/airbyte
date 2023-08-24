@@ -1,11 +1,11 @@
-from typing import List
-from dagster import StringSource, InitResourceContext, resource
-from github import Github, Repository, ContentFile, GitTreeElement
 from datetime import datetime, timedelta
-from dateutil.parser import parse
+from typing import List
 
-from orchestrator.config import CONNECTORS_PATH
+from dagster import InitResourceContext, StringSource, resource
+from dateutil.parser import parse
+from github import ContentFile, Github, GitTreeElement, Repository
 from metadata_service.constants import METADATA_FILE_NAME
+from orchestrator.config import CONNECTORS_PATH
 
 
 def _valid_metadata_file_path(path: str) -> bool:

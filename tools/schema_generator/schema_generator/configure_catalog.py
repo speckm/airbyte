@@ -1,7 +1,7 @@
 import json
 import os
 
-from airbyte_cdk.models import ConfiguredAirbyteCatalog, AirbyteMessage, ConfiguredAirbyteStream, DestinationSyncMode
+from airbyte_cdk.models import AirbyteMessage, ConfiguredAirbyteCatalog, ConfiguredAirbyteStream, DestinationSyncMode
 
 
 def configure_catalog():

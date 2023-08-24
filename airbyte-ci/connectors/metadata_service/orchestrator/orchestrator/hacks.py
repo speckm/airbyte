@@ -1,13 +1,12 @@
-from dagster import get_dagster_logger
-from dagster_gcp.gcs.file_manager import GCSFileManager, GCSFileHandle
+from typing import Union
 
-from orchestrator.models.metadata import LatestMetadataEntry
+from dagster import get_dagster_logger
+from dagster_gcp.gcs.file_manager import GCSFileHandle, GCSFileManager
 from metadata_service.constants import METADATA_FILE_NAME
 from metadata_service.gcs_upload import get_metadata_remote_file_path
-from metadata_service.models.generated.ConnectorRegistrySourceDefinition import ConnectorRegistrySourceDefinition
 from metadata_service.models.generated.ConnectorRegistryDestinationDefinition import ConnectorRegistryDestinationDefinition
-
-from typing import Union
+from metadata_service.models.generated.ConnectorRegistrySourceDefinition import ConnectorRegistrySourceDefinition
+from orchestrator.models.metadata import LatestMetadataEntry
 
 PolymorphicRegistryEntry = Union[ConnectorRegistrySourceDefinition, ConnectorRegistryDestinationDefinition]
 

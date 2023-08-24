@@ -5,8 +5,8 @@
 import argparse
 import sys
 
-from .infer_schemas import infer_schemas
 from .configure_catalog import configure_catalog
+from .infer_schemas import infer_schemas
 
 
 def main():

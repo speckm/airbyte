@@ -1,6 +1,6 @@
 import time
 from dataclasses import dataclass
-from typing import Mapping, Any, List, ClassVar
+from typing import Any, ClassVar, List, Mapping
 
 import jwt
 import requests

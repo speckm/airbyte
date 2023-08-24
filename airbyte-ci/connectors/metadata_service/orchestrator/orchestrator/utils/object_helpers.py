@@ -1,8 +1,9 @@
-import mergedeep
-import json
-from deepdiff import DeepDiff
-from typing import TypeVar
 import copy
+import json
+from typing import TypeVar
+
+import mergedeep
+from deepdiff import DeepDiff
 
 T = TypeVar("T")
 

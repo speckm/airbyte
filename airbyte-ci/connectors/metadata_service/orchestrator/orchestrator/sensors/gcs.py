@@ -1,15 +1,15 @@
 from dagster import (
-    sensor,
+    DefaultSensorStatus,
     RunRequest,
-    SkipReason,
     SensorDefinition,
     SensorEvaluationContext,
-    build_resources,
-    DefaultSensorStatus,
     SensorResult,
+    SkipReason,
+    build_resources,
+    sensor,
 )
-from orchestrator.utils.dagster_helpers import string_array_to_hash
 from orchestrator.logging import sentry
+from orchestrator.utils.dagster_helpers import string_array_to_hash
 
 
 def new_gcs_blobs_sensor(

@@ -1,7 +1,8 @@
-from dagster import MetadataValue, Output
-import pandas as pd
 import hashlib
-from typing import Optional, List
+from typing import List, Optional
+
+import pandas as pd
+from dagster import MetadataValue, Output
 
 OutputDataFrame = Output[pd.DataFrame]
 CURSOR_SEPARATOR = ":"
